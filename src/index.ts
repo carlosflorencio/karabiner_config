@@ -17,6 +17,8 @@ let ifTerminal = ifApp([
     '^com\\.googlecode\\.iterm2$',
     '^org\\.alacritty$',
 ])
+let ifFinder = ifApp('^com\\.apple\\.finder$')
+//let ifActivityMonitor = ifApp('^com\\.apple\\.ActivityMonitor$')
 
 
 // npm run build
@@ -62,6 +64,10 @@ writeToProfile('Carlos', [
             map('r').to('right_arrow', ['command', 'option']),
             map('w').to('left_arrow', ['command', 'option']),
         ])
+    ]),
+
+    rule('Finder shortcuts', ifFinder).manipulators([
+        map('f', ['command', 'shift']).to('l', ['option', 'command']),
     ]),
 ], {
     "basic.simultaneous_threshold_milliseconds": 50,
