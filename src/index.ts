@@ -85,7 +85,7 @@ writeToProfile('Carlos', [
     ]),
 
     rule('Better delete word experience', ifBrowser).manipulators([
-        map('delete_or_backspace', ['control']).to('delete_or_backspace', ['option']),
+        map('delete_or_backspace', ['control', 'option']).to('delete_or_backspace', ['option']),
     ]),
 
     rule('Floating terminal').manipulators([
