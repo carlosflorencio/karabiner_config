@@ -24,6 +24,9 @@ let ifBrowser = ifApp([
     '^org\\.mozilla\\.firefox$',
     '^com\\.vivaldi\\.Vivaldi$',
 ])
+let ifFloatingTerminal = ifApp('^com\\.github\\.wez\\.wezterm$')
+//let ifFloatingTerminal = ifApp('^org\\.alacritty$')
+let ifNotFloatingTerminal = ifFloatingTerminal.unless()
 //let ifActivityMonitor = ifApp('^com\\.apple\\.ActivityMonitor$')
 
 
@@ -83,6 +86,20 @@ writeToProfile('Carlos', [
 
     rule('Better delete word experience', ifBrowser).manipulators([
         map('delete_or_backspace', ['control']).to('delete_or_backspace', ['option']),
+    ]),
+
+    rule('Floating terminal').manipulators([
+        withCondition(ifNotFloatingTerminal)([
+            withModifier('Hyper')([
+                map('return_or_enter').to$("open '/Applications/WezTerm.app'"),
+            ])
+        ]),
+        withCondition(ifFloatingTerminal)([
+            withModifier('Hyper')([
+                map('return_or_enter').to("h", ['command']) // faster
+                //map('return_or_enter').to$("osascript -e 'tell application \"System Events\" to set visible of first application process whose frontmost is true to false'"),
+            ])
+        ])
     ]),
 ], {
     "basic.simultaneous_threshold_milliseconds": 50,
