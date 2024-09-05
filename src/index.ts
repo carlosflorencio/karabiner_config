@@ -24,6 +24,9 @@ let ifBrowser = ifApp([
     '^org\\.mozilla\\.firefox$',
     '^com\\.vivaldi\\.Vivaldi$',
 ])
+
+let ifOutlook = ifApp('^com\\.microsoft\\.Outlook$')
+
 let ifFloatingTerminal = ifApp('^com\\.github\\.wez\\.wezterm$')
 //let ifFloatingTerminal = ifApp('^org\\.alacritty$')
 let ifNotFloatingTerminal = ifFloatingTerminal.unless()
@@ -84,7 +87,7 @@ writeToProfile('Carlos', [
         map('f', ['command', 'shift']).to('l', ['option', 'command']),
     ]),
 
-    rule('Better delete word experience', ifBrowser).manipulators([
+    rule('Better delete word experience', ifBrowser, ifOutlook).manipulators([
         map('delete_or_backspace', ['control', 'option']).to('delete_or_backspace', ['option']),
     ]),
 
