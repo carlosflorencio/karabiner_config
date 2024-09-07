@@ -11,26 +11,42 @@ import {
     writeToProfile,
 } from 'karabiner.ts'
 
+const regex = {
+    chrome: '^com\\.google\\.Chrome$',
+    safari: '^com\\.apple\\.Safari$',
+    firefox: '^org\\.mozilla\\.firefox$',
+    vivaldi: '^com\\.vivaldi\\.Vivaldi$',
+    finder: '^com\\.apple\\.finder$',
+    iterm2: '^com\\.googlecode\\.iterm2$',
+    alacritty: '^org\\.alacritty$',
+    wezterm: '^com\\.github\\.wez\\.wezterm$',
+    activityMonitor: '^com\\.apple\\.ActivityMonitor$',
+    outlook: '^com\\.microsoft\\.Outlook$',
+    browsers: [""],
+    terminals: [""]
+}
+
+regex.browsers = [
+    regex.chrome,
+    regex.safari,
+    regex.firefox,
+    regex.vivaldi,
+]
+
+regex.terminals = [
+    regex.iterm2,
+    regex.alacritty,
+    regex.wezterm,
+]
+
 let ifAppleKeyboard = ifDevice({ vendor_id: 1452, product_id: 834 })
 let ifNotAppleKeyboard = ifAppleKeyboard.unless()
-let ifTerminal = ifApp([
-    '^com\\.googlecode\\.iterm2$',
-    '^org\\.alacritty$',
-])
-let ifFinder = ifApp('^com\\.apple\\.finder$')
-let ifBrowser = ifApp([
-    '^com\\.google\\.Chrome$',
-    '^com\\.apple\\.Safari$',
-    '^org\\.mozilla\\.firefox$',
-    '^com\\.vivaldi\\.Vivaldi$',
-])
+let ifTerminal = ifApp(regex.terminals)
+let ifFinder = ifApp(regex.finder)
+let ifBrowser = ifApp(regex.browsers)
 
-let ifOutlook = ifApp('^com\\.microsoft\\.Outlook$')
-
-let ifFloatingTerminal = ifApp('^com\\.github\\.wez\\.wezterm$')
-//let ifFloatingTerminal = ifApp('^org\\.alacritty$')
+let ifFloatingTerminal = ifApp(regex.wezterm)
 let ifNotFloatingTerminal = ifFloatingTerminal.unless()
-//let ifActivityMonitor = ifApp('^com\\.apple\\.ActivityMonitor$')
 
 
 // npm run build
@@ -40,43 +56,7 @@ let ifNotFloatingTerminal = ifFloatingTerminal.unless()
 // (--dry-run print the config json into console)
 // + Create a new profile if needed.
 writeToProfile('Carlos', [
-    rule('Caps Lock → Hyper', ifAppleKeyboard).manipulators([
-        map('caps_lock').toHyper().toIfAlone('escape').parameters({
-            "basic.to_if_alone_timeout_milliseconds": 200
-        }),
-    ]),
-
-    rule('Right cmd to control', ifAppleKeyboard).manipulators([
-        map('right_command').to('left_control'),
-    ]),
-
-    rule('Hyper + hjkl → Arrow keys', ifAppleKeyboard).manipulators([
-        withMapper<FromKeyParam, ToKeyParam>({
-            j: 'down_arrow',
-            l: 'right_arrow',
-            k: 'up_arrow',
-            h: 'left_arrow',
-        })((k, v) => withModifier('Hyper')([
-            map(k).to(v),
-        ])
-        )
-    ]),
-
-    rule('Hyper + s/f to switch spaces', ifAppleKeyboard).manipulators([
-        withModifier('Hyper')([
-            map('f').to('right_arrow', ['left_control']),
-            map('s').to('left_arrow', ['left_control']),
-        ])
-    ]),
-
-    tmux(), // order matters
-
-    rule('Hyper + r/w to switch tabs', ifAppleKeyboard).manipulators([
-        withModifier('Hyper')([
-            map('r').to('right_arrow', ['command', 'option']),
-            map('w').to('left_arrow', ['command', 'option']),
-        ])
-    ]),
+    ...laptop_keyboard(),
 
     // open finder from other apps
     rule('Browse shortcuts', ifBrowser).manipulators([
@@ -87,8 +67,11 @@ writeToProfile('Carlos', [
         map('f', ['command', 'shift']).to('l', ['option', 'command']),
     ]),
 
-    rule('Better delete word experience', ifBrowser, ifOutlook).manipulators([
-        map('delete_or_backspace', ['control', 'option']).to('delete_or_backspace', ['option']),
+    rule('Better delete word experience', ifApp([
+        ...regex.browsers,
+        regex.outlook
+    ])).manipulators([map('delete_or_backspace', ['control', 'option']).to('delete_or_backspace', ['option']),
+    map('w', ['control']).to('delete_or_backspace', ['option']),
     ]),
 
     rule('Floating terminal').manipulators([
@@ -111,6 +94,47 @@ writeToProfile('Carlos', [
     "basic.to_if_held_down_threshold_milliseconds": 200,
     "mouse_motion_to_scroll.speed": 100
 })
+
+function laptop_keyboard() {
+    return [
+
+        rule('Caps Lock → Hyper', ifAppleKeyboard).manipulators([
+            map('caps_lock').toHyper().toIfAlone('escape').parameters({
+                "basic.to_if_alone_timeout_milliseconds": 200
+            }),
+        ]),
+
+        rule('Right cmd to control', ifAppleKeyboard).manipulators([
+            map('right_command').to('left_control'),
+        ]),
+
+        rule('Hyper + hjkl → Arrow keys', ifAppleKeyboard).manipulators([
+            withMapper<FromKeyParam, ToKeyParam>({
+                j: 'down_arrow',
+                l: 'right_arrow',
+                k: 'up_arrow',
+                h: 'left_arrow',
+            })((k, v) => withModifier('Hyper')([
+                map(k).to(v),
+            ])
+            )
+        ]),
+
+        rule('Hyper + s/f to switch spaces', ifAppleKeyboard).manipulators([
+            withModifier('Hyper')([
+                map('f').to('right_arrow', ['left_control']),
+                map('s').to('left_arrow', ['left_control']),
+            ])
+        ]),
+
+        rule('Hyper + r/w to switch tabs', ifAppleKeyboard).manipulators([
+            withModifier('Hyper')([
+                map('r').to('right_arrow', ['command', 'option']),
+                map('w').to('left_arrow', ['command', 'option']),
+            ])
+        ]),
+    ]
+}
 
 function tmux() {
     return rule('Tmux internal macos', ifTerminal).manipulators([
