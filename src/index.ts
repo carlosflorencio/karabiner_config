@@ -4,6 +4,7 @@ import {
     ifDevice,
     map,
     rule,
+    toApp,
     ToKeyParam,
     withCondition,
     withMapper,
@@ -77,16 +78,33 @@ writeToProfile('Carlos', [
     rule('Floating terminal').manipulators([
         withCondition(ifNotFloatingTerminal)([
             withModifier('Hyper')([
-                map('return_or_enter').to$("open '/Applications/WezTerm.app'"),
+                //map('return_or_enter').to$("/bin/sh ~/.config/aerospace/floating_terminal.sh"),
+                map('return_or_enter').to$("aerospace focus-monitor main; open '/Applications/WezTerm.app'"),
             ])
         ]),
         withCondition(ifFloatingTerminal)([
             withModifier('Hyper')([
-                map('return_or_enter').to("h", ['command']) // faster
+                //map('return_or_enter').to("h", ['command']) // faster
+                map('return_or_enter').to("tab", ['command'])
                 //map('return_or_enter').to$("osascript -e 'tell application \"System Events\" to set visible of first application process whose frontmost is true to false'"),
             ])
         ])
     ]),
+
+    rule("Open apps").manipulators([
+        withModifier(['left_control', 'option'])({
+            c: toApp("Google Chrome"),
+            v: toApp("Vivaldi"),
+            t: toApp("Microsoft Teams"),
+            s: toApp("Slack"),
+            f: toApp("Finder"),
+            w: toApp("WezTerm"),
+            o: toApp("Microsoft Outlook")
+        }),
+        withModifier(['left_control', 'option', 'shift'])({
+            t: toApp("TickTick"),
+        })
+    ])
 ], {
     "basic.simultaneous_threshold_milliseconds": 50,
     "basic.to_delayed_action_delay_milliseconds": 200,
