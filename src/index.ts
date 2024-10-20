@@ -1,54 +1,20 @@
 import {
-    FromKeyParam,
+    hyperLayer,
     ifApp,
-    ifDevice,
+    layer,
     map,
+    mapSimultaneous,
     rule,
-    toApp,
-    ToKeyParam,
+    toMouseCursorPosition,
     withCondition,
-    withMapper,
     withModifier,
-    writeToProfile,
+    writeToProfile
 } from 'karabiner.ts'
+import { laptop_keyboard } from './laptop-keyboard'
+import { app_chrome, app_finder, app_outlook, app_slack, app_vivaldi, floating_terminal } from './rules-apps'
+import { regex } from './patterns'
 
-const regex = {
-    chrome: '^com\\.google\\.Chrome$',
-    safari: '^com\\.apple\\.Safari$',
-    firefox: '^org\\.mozilla\\.firefox$',
-    vivaldi: '^com\\.vivaldi\\.Vivaldi$',
-    finder: '^com\\.apple\\.finder$',
-    iterm2: '^com\\.googlecode\\.iterm2$',
-    alacritty: '^org\\.alacritty$',
-    wezterm: '^com\\.github\\.wez\\.wezterm$',
-    activityMonitor: '^com\\.apple\\.ActivityMonitor$',
-    outlook: '^com\\.microsoft\\.Outlook$',
-    browsers: [""],
-    terminals: [""]
-}
-
-regex.browsers = [
-    regex.chrome,
-    regex.safari,
-    regex.firefox,
-    regex.vivaldi,
-]
-
-regex.terminals = [
-    regex.iterm2,
-    regex.alacritty,
-    regex.wezterm,
-]
-
-let ifAppleKeyboard = ifDevice({ vendor_id: 1452, product_id: 834 })
-let ifNotAppleKeyboard = ifAppleKeyboard.unless()
-let ifTerminal = ifApp(regex.terminals)
-let ifFinder = ifApp(regex.finder)
-let ifBrowser = ifApp(regex.browsers)
-
-let ifFloatingTerminal = ifApp(regex.wezterm)
-let ifNotFloatingTerminal = ifFloatingTerminal.unless()
-
+// Reference config: https://github.com/evan-liu/karabiner-config/blob/main/karabiner-config.ts
 
 // npm run build
 // will replace the content of karabiner.json profile.complex_modifications
@@ -57,52 +23,68 @@ let ifNotFloatingTerminal = ifFloatingTerminal.unless()
 // (--dry-run print the config json into console)
 // + Create a new profile if needed.
 writeToProfile('Carlos', [
-    ...laptop_keyboard(),
+    app_finder(),
+    app_outlook(),
+    app_vivaldi(),
+    app_chrome(),
+    app_slack(),
 
-    // open finder from other apps
-    rule('Browse shortcuts', ifBrowser).manipulators([
-        map('f', ['command', 'shift']).to$("open ~/Downloads"),
+    laptop_keyboard(),
+
+    floating_terminal(),
+
+    layer(';', 'apps-mode').manipulators([
+        map('c').toApp("Google Chrome"),
+        map('v').toApp("Vivaldi"),
+        map('s').toApp("Slack"),
+        map('f').toApp("Finder"),
+        map('w').toApp("WezTerm"),
+        map('o').toApp("Microsoft Outlook"),
+        map('p').toApp("Postman"),
+        map('t').toApp("Microsoft Teams"),
+        map('g').toApp("ChatGPT"),
+        map('t', 'shift').toApp("TickTick"),
     ]),
 
-    rule('Finder shortcuts', ifFinder).manipulators([
-        map('f', ['command', 'shift']).to('l', ['option', 'command']),
+    rule('Homerow').manipulators([
+        mapSimultaneous(['f', 'j']).to('spacebar', ['command', 'shift']), // Click
+        mapSimultaneous(['f', 'k']).to('j', ['command', 'shift']), // Scroll
     ]),
 
-    rule('Better delete word experience', ifApp([
-        ...regex.browsers,
-        regex.outlook
-    ])).manipulators([map('delete_or_backspace', ['control', 'option']).to('delete_or_backspace', ['option']),
-    map('w', ['control']).to('delete_or_backspace', ['option']),
-    ]),
-
-    rule('Floating terminal').manipulators([
-        withCondition(ifNotFloatingTerminal)([
-            withModifier('Hyper')([
-                //map('return_or_enter').to$("/bin/sh ~/.config/aerospace/floating_terminal.sh"),
-                map('return_or_enter').to$("aerospace focus-monitor main; open '/Applications/WezTerm.app'"),
+    hyperLayer('spacebar')
+        .description('Leader Mode')
+        .leaderMode({ sticky: true })
+        .notification()
+        .manipulators([
+            withCondition(ifApp(regex.outlook))([
+                map('j').to('down_arrow'),
+                map('k').to('up_arrow'),
+                map('d').to('delete_or_backspace', ['command']), // delete
+                map('a').to('e', ['control']), // archive
+                map('u').to('z', ['command']), // undo
+                map('r').to('t', ['command', 'shift']), // mark as unread
+                map('t').to('t', ['command']), // mark as read
             ])
         ]),
-        withCondition(ifFloatingTerminal)([
-            withModifier('Hyper')([
-                //map('return_or_enter').to("h", ['command']) // faster
-                map('return_or_enter').to("tab", ['command'])
-                //map('return_or_enter').to$("osascript -e 'tell application \"System Events\" to set visible of first application process whose frontmost is true to false'"),
-            ])
-        ])
-    ]),
 
-    rule("Open apps").manipulators([
-        withModifier(['left_control', 'option'])({
-            c: toApp("Google Chrome"),
-            v: toApp("Vivaldi"),
-            t: toApp("Microsoft Teams"),
-            s: toApp("Slack"),
-            f: toApp("Finder"),
-            w: toApp("WezTerm"),
-            o: toApp("Microsoft Outlook")
-        }),
-        withModifier(['left_control', 'option', 'shift'])({
-            t: toApp("TickTick"),
+
+    // too slow atm
+    // rule('Window Management').manipulators([
+    //     withModifier('Hyper')({
+    //         l: raycastWin('right-half'),
+    //         h: raycastWin('left-half'),
+    //         e: raycastWin('maximize'),
+    //         d: raycastWin('almost-maximize'),
+    //         o: raycastWin('next-display'),
+    //         u: raycastWin('previous-display')
+    //     })
+    // ])
+
+    rule('Move Mouse').manipulators([
+        withModifier('Hyper')({
+            ',': toMouseCursorPosition({ x: '50%', y: '50%', screen: 0 }),
+            'm': toMouseCursorPosition({ x: '50%', y: '50%', screen: 2 }),
+            '.': toMouseCursorPosition({ x: '50%', y: '50%', screen: 1 }),
         })
     ])
 ], {
@@ -113,62 +95,3 @@ writeToProfile('Carlos', [
     "mouse_motion_to_scroll.speed": 100
 })
 
-function laptop_keyboard() {
-    return [
-
-        rule('Caps Lock → Hyper', ifAppleKeyboard).manipulators([
-            map('caps_lock').toHyper().toIfAlone('escape').parameters({
-                "basic.to_if_alone_timeout_milliseconds": 200
-            }),
-        ]),
-
-        rule('Right cmd to control', ifAppleKeyboard).manipulators([
-            map('right_command').to('left_control'),
-        ]),
-
-        rule('Hyper + hjkl → Arrow keys', ifAppleKeyboard).manipulators([
-            withMapper<FromKeyParam, ToKeyParam>({
-                j: 'down_arrow',
-                l: 'right_arrow',
-                k: 'up_arrow',
-                h: 'left_arrow',
-            })((k, v) => withModifier('Hyper')([
-                map(k).to(v),
-            ])
-            )
-        ]),
-
-        rule('Hyper + s/f to switch spaces', ifAppleKeyboard).manipulators([
-            withModifier('Hyper')([
-                map('f').to('right_arrow', ['left_control']),
-                map('s').to('left_arrow', ['left_control']),
-            ])
-        ]),
-
-        rule('Hyper + r/w to switch tabs', ifAppleKeyboard).manipulators([
-            withModifier('Hyper')([
-                map('r').to('right_arrow', ['command', 'option']),
-                map('w').to('left_arrow', ['command', 'option']),
-            ])
-        ]),
-    ]
-}
-
-function tmux() {
-    return rule('Tmux internal macos', ifTerminal).manipulators([
-        map('t', ['command']).to('b', ['control']).to('c'),
-        map('d', ['command']).to('b', ['control']).to('v'),
-        map('d', ['command', 'shift']).to('b', ['control']).to('h'),
-        map('w', ['command']).to('b', ['control']).to('7', ['shift']), // &
-
-        withModifier('Hyper')([
-            map('r').to('b', ['control']).to('n'),
-            map('w').to('b', ['control']).to('p'),
-        ]),
-
-        withCondition(ifNotAppleKeyboard)([
-            map('right_arrow', ['command', 'option']).to('b', 'control').to('n'),
-            map('left_arrow', ['command', 'option']).to('b', 'control').to('p'),
-        ])
-    ])
-}
