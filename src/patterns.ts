@@ -15,6 +15,7 @@ export const regex = {
     activityMonitor: '^com\\.apple\\.ActivityMonitor$',
     outlook: '^com\\.microsoft\\.Outlook$',
     slack: '^com\\.tinyspeck\\.slackmacgap$',
+    chatgpt: '^com.openai.chat$',
     browsers: [""],
     terminals: [""]
 }

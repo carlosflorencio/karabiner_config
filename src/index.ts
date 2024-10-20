@@ -11,7 +11,7 @@ import {
     writeToProfile
 } from 'karabiner.ts'
 import { laptop_keyboard } from './laptop-keyboard'
-import { app_chrome, app_finder, app_outlook, app_slack, app_vivaldi, floating_terminal } from './rules-apps'
+import { app_chatgpt, app_chrome, app_finder, app_outlook, app_slack, app_vivaldi, floating_terminal } from './rules-apps'
 import { regex } from './patterns'
 
 // Reference config: https://github.com/evan-liu/karabiner-config/blob/main/karabiner-config.ts
@@ -28,6 +28,7 @@ writeToProfile('Carlos', [
     app_vivaldi(),
     app_chrome(),
     app_slack(),
+    app_chatgpt(),
 
     laptop_keyboard(),
 

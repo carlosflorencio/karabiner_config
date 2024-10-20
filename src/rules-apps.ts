@@ -52,6 +52,18 @@ export function app_slack() {
     ])
 }
 
+export function app_chatgpt() {
+    return rule('ChatGPT', ifApp(regex.chatgpt)).manipulators([
+        ...betterDeleteWord(),
+
+        map('b', 'command').to('f6'), // showHideSideBar
+
+        ...tapModifiers({
+            '<⌥': toKey('f6'), // showHideSideBar
+        }),
+    ])
+}
+
 export function app_vivaldi() {
     return rule('Vivaldi', ifApp(regex.vivaldi)).manipulators([
         ...betterDeleteWord(),
