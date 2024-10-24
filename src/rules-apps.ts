@@ -34,7 +34,7 @@ export function app_chrome() {
 
         ...tapModifiers({
             '‹⌥': toKey('a', '⌘⇧'), // searchTabs
-            '<⌘': toKey('i', '⌘⌥'), // developerTools
+            //'<⌘': toKey('i', '⌘⌥'), // developerTools
         }),
 
         map('i', ['command']).to('i', ['command', 'option']), // developerTools
@@ -70,7 +70,7 @@ export function app_vivaldi() {
 
         ...tapModifiers({
             '‹⌥': toKey('e', '⌘'), // search tabs
-            '<⌘': toKey('i', '⌘⌥'), // developerTools
+            //'<⌘': toKey('i', '⌘⌥'), // developerTools
         }),
 
         map('i', ['command']).to('i', ['command', 'option']), // developerTools
