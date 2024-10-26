@@ -21,7 +21,7 @@ import {
   floating_terminal,
 } from "./rules-apps";
 import { regex } from "./patterns";
-import { focusWindowMainDisplay } from "./utils";
+import { focusWindow, focusWindowMainDisplay } from "./utils";
 
 // Reference config: https://github.com/evan-liu/karabiner-config/blob/main/karabiner-config.ts
 
@@ -54,7 +54,8 @@ writeToProfile(
       map("w").toApp("WezTerm"),
       map("o").toApp("Microsoft Outlook"),
       map("p").toApp("Postman"),
-      map("t").toApp("Microsoft Teams"),
+      map("t").to$(focusWindow("Microsoft Teams")),
+      //map("t").toApp("Microsoft Teams"),
       map("g").toApp("ChatGPT"),
       map("t", "shift").toApp("TickTick"),
     ]),

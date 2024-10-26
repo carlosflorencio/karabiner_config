@@ -79,3 +79,75 @@ export function focusWindowMainDisplay(app: string) {
     end if
     '`;
 }
+
+export function openNvimGitRepo() {
+  return `osascript -e '
+    tell application "System Events"
+        -- Check if Vivaldi or Chrome is the frontmost app
+        set frontApp to (name of first application process whose frontmost is true)
+        if frontApp is "Vivaldi" or frontApp is "Google Chrome" then
+            -- say frontApp & " is active"
+            set currentURL to ""
+            
+            if frontApp is "Vivaldi" then
+                tell application "Vivaldi"
+                    set windowCount to count windows
+                    repeat with i from 1 to windowCount
+                        set currentTab to active tab of window i
+                        set tabURL to URL of currentTab
+                        if tabURL contains "github.com" then
+                            set currentURL to tabURL
+                            exit repeat
+                        end if
+                    end repeat
+                end tell
+            else if frontApp is "Google Chrome" then
+                tell application "Google Chrome"
+                    set windowCount to count windows
+                    repeat with i from 1 to windowCount
+                        set currentTab to active tab of window i
+                        set tabURL to URL of currentTab
+                        if tabURL contains "github.com" then
+                            set currentURL to tabURL
+                            exit repeat
+                        end if
+                    end repeat
+                end tell
+            end if
+            
+            if currentURL is "" then
+                say "No active tab with GitHub URL found"
+                display dialog "No active tab with GitHub URL found in " & frontApp buttons {"OK"} default button "OK"
+                return
+            end if
+        else
+            say "Neither Vivaldi nor Chrome is the active application"
+            display dialog "Please make Vivaldi or Chrome the active application with a GitHub tab." buttons {"OK"} default button "OK"
+            return
+        end if
+    end tell
+
+    set shellCommand to "~/scripts/open_git_link.sh " & quoted form of currentURL
+
+    -- Debugging: Write the shell command to a file in /tmp
+    --do shell script "echo " & quoted form of shellCommand & " > /tmp/debug_command.txt"
+
+    -- Now focus WezTerm and run the shell command with the URL as an argument
+    tell application "WezTerm" to activate
+    do shell script shellCommand
+'`;
+}
+
+export function focusWindow(app: string) {
+  return `osascript -e '
+    tell application "${app}"
+      if it is running then
+        activate
+      else
+        launch
+        delay 1
+        activate
+      end if
+    end tell
+  '`;
+}
