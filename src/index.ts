@@ -15,13 +15,14 @@ import {
   app_chatgpt,
   app_chrome,
   app_finder,
+  app_msty,
   app_outlook,
   app_slack,
   app_vivaldi,
   floating_terminal,
 } from "./rules-apps";
 import { regex } from "./patterns";
-import { focusWindow, focusWindowMainDisplay } from "./utils";
+import { focusWindow } from "./utils";
 
 // Reference config: https://github.com/evan-liu/karabiner-config/blob/main/karabiner-config.ts
 
@@ -40,25 +41,32 @@ writeToProfile(
     app_chrome(),
     app_slack(),
     app_chatgpt(),
+    app_msty(),
 
     laptop_keyboard(),
 
     floating_terminal(),
 
     layer(";", "apps-mode").manipulators([
+      // browsers
       map("c").toApp("Google Chrome"),
       map("v").toApp("Vivaldi"),
-      //map("v").to$(focusWindowMainDisplay("Vivaldi")),
+      map("b").toApp("Brave Browser"),
+
+      // coms
       map("s").toApp("Slack"),
+      map("o").toApp("Microsoft Outlook"),
+      map("t").to$(focusWindow("Microsoft Teams")),
+
+      // tools
       map("f").toApp("Finder"),
       map("w").toApp("WezTerm"),
-      map("b").toApp("Brave Browser"),
-      map("o").toApp("Microsoft Outlook"),
       map("p").toApp("Postman"),
-      map("t").to$(focusWindow("Microsoft Teams")),
-      //map("t").toApp("Microsoft Teams"),
-      map("g").toApp("ChatGPT"),
       map("t", "shift").toApp("TickTick"),
+
+      // ai
+      //map("g").toApp("ChatGPT"),
+      map("g").toApp("Msty"),
     ]),
 
     rule("Homerow").manipulators([

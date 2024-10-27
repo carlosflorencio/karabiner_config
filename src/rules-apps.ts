@@ -45,6 +45,20 @@ export function app_outlook() {
   ]);
 }
 
+export function app_msty() {
+  return rule("Msty AI", ifApp(regex.msty)).manipulators([
+    ...betterDeleteWord(),
+
+    map("t", ["command"]).to("s", ["command", "shift"]), // toggle context shield
+    map("n", ["command", "shift"]).to("s", ["command", "shift"]), // toggle context shield
+    map("k", ["command"]).to("f", ["command"]), // toggle search
+    map("b", ["command"]).to("1", ["command"]), // toggle side bar
+
+    map("right_arrow", ["command", "option"]).to("right_arrow", ["option"]),
+    map("left_arrow", ["command", "option"]).to("left_arrow", ["option"]),
+  ]);
+}
+
 export function app_chrome() {
   return rule("Chrome", ifApp(regex.chrome)).manipulators([
     ...betterDeleteWord(),
