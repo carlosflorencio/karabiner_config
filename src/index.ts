@@ -47,11 +47,12 @@ writeToProfile(
 
     layer(";", "apps-mode").manipulators([
       map("c").toApp("Google Chrome"),
-      //map('v').toApp("Vivaldi"),
-      map("v").to$(focusWindowMainDisplay("Vivaldi")),
+      map("v").toApp("Vivaldi"),
+      //map("v").to$(focusWindowMainDisplay("Vivaldi")),
       map("s").toApp("Slack"),
       map("f").toApp("Finder"),
       map("w").toApp("WezTerm"),
+      map("b").toApp("Brave Browser"),
       map("o").toApp("Microsoft Outlook"),
       map("p").toApp("Postman"),
       map("t").to$(focusWindow("Microsoft Teams")),
