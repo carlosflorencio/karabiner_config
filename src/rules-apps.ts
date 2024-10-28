@@ -36,9 +36,9 @@ export function app_outlook() {
   return rule("Outlook", ifApp(regex.outlook)).manipulators([
     ...betterDeleteWord(),
 
-    // map('d', ['control']).to('delete_or_backspace', 'command'), // delete
-    // map('a', ['control']).to('e', 'control'), // delete
-    // map('u', ['control']).to('f', ['command', 'shift']), // mark as unread
+    map("d", ["control"]).to("delete_or_backspace", "command"), // delete
+    map("a", ["control"]).to("e", "control"), // archive
+    map("u", ["control"]).to("f", ["command", "shift"]), // mark as unread
 
     map("right_arrow", ["command", "option"]).to("]", ["shift", "control"]),
     map("left_arrow", ["command", "option"]).to("[", ["shift", "control"]),

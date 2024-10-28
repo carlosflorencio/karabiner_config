@@ -69,27 +69,33 @@ writeToProfile(
       map("g").toApp("Msty"),
     ]),
 
+    rule("App switch").manipulators([
+      withModifier("Hyper")([
+        map("spacebar").to("tab", ["command"]).toIfAlone("tab", ["command"]),
+      ]),
+    ]),
+
     rule("Homerow").manipulators([
       mapSimultaneous(["f", "j"]).to("spacebar", ["command", "shift"]), // Click
       mapSimultaneous(["f", "k"]).to("j", ["command", "shift"]), // Scroll
     ]),
 
-    hyperLayer("spacebar")
-      .description("Leader Mode")
-      .leaderMode({ sticky: true })
-      .notification()
-      .manipulators([
-        withCondition(ifApp(regex.outlook))([
-          map("j").to("down_arrow"),
-          map("k").to("up_arrow"),
-          map("d").to("delete_or_backspace", ["command"]), // delete
-          map("a").to("e", ["control"]), // archive
-          map("u").to("z", ["command"]), // undo
-          map("r").to("t", ["command", "shift"]), // mark as unread
-          map("t").to("t", ["command"]), // mark as read
-          map("/").to("f", ["command", "shift"]), // search
-        ]),
-      ]),
+    // hyperLayer("spacebar")
+    //   .description("Leader Mode")
+    //   .leaderMode({ sticky: true })
+    //   .notification()
+    //   .manipulators([
+    //     withCondition(ifApp(regex.outlook))([
+    //       map("j").to("down_arrow"),
+    //       map("k").to("up_arrow"),
+    //       map("d").to("delete_or_backspace", ["command"]), // delete
+    //       map("a").to("e", ["control"]), // archive
+    //       map("u").to("z", ["command"]), // undo
+    //       map("r").to("t", ["command", "shift"]), // mark as unread
+    //       map("t").to("t", ["command"]), // mark as read
+    //       map("/").to("f", ["command", "shift"]), // search
+    //     ]),
+    //   ]),
 
     // too slow atm
     // rule('Window Management').manipulators([
