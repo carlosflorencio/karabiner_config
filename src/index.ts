@@ -56,13 +56,13 @@ writeToProfile(
       // coms
       map("s").toApp("Slack"),
       map("o").toApp("Microsoft Outlook"),
-      map("t").to$(focusWindow("Microsoft Teams")),
+      map("y").to$(focusWindow("Microsoft Teams")),
 
       // tools
       map("f").toApp("Finder"),
       map("w").toApp("WezTerm"),
       map("p").toApp("Postman"),
-      map("t", "shift").toApp("TickTick"),
+      map("t").toApp("TickTick"),
 
       // ai
       //map("g").toApp("ChatGPT"),
