@@ -67,6 +67,9 @@ writeToProfile(
       // ai
       //map("g").toApp("ChatGPT"),
       map("g").toApp("Msty"),
+
+      // ide's
+      map("a").toApp("Visual Studio Code"),
     ]),
 
     rule("App switch").manipulators([
