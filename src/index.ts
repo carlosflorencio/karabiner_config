@@ -47,7 +47,7 @@ writeToProfile(
 
     floating_terminal(),
 
-    layer(";", "apps-mode").manipulators([
+    layer("/", "apps-mode").manipulators([
       // browsers
       map("c").toApp("Google Chrome"),
       map("v").toApp("Vivaldi"),
