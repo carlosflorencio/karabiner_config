@@ -47,7 +47,7 @@ writeToProfile(
 
     floating_terminal(),
 
-    layer("/", "apps-mode").manipulators([
+    layer("f13", "Switch App").manipulators([
       // browsers
       map("c").toApp("Google Chrome"),
       map("v").toApp("Vivaldi"),
@@ -71,7 +71,7 @@ writeToProfile(
 
       // ide's
       map("a").toApp("Visual Studio Code"),
-    ]),
+    ]).leaderMode().notification(),
 
     rule("App switch").manipulators([
       withModifier("Hyper")([
