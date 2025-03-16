@@ -8,6 +8,7 @@ import {
 } from "karabiner.ts";
 import {
   floatingTerminal,
+  ifAppleKeyboard,
   ifBrowser,
   ifFinder,
   ifFloatingTerminal,
@@ -105,10 +106,11 @@ export function app_vivaldi() {
 
     map("o", ["control"]).to$(openNvimGitRepo()),
 
+    //withCondition(ifAppleKeyboard)([
     ...tapModifiers({
-      "‹⌥": toKey("e", "⌘"), // search tabs
-      //'<⌘': toKey('i', '⌘⌥'), // developerTools
+      "<⌘": toKey("e", "⌘"),
     }),
+    //]),
 
     map("i", ["command"]).to("i", ["command", "option"]), // developerTools
   ]);
