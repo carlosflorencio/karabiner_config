@@ -1,6 +1,4 @@
 import {
-  hyperLayer,
-  ifApp,
   layer,
   map,
   mapSimultaneous,
@@ -11,6 +9,7 @@ import {
   writeToProfile,
 } from "karabiner.ts";
 import { laptop_keyboard } from "./laptop-keyboard";
+import { appLaunchers } from "./launch-apps";
 import {
   app_chatgpt,
   app_chrome,
@@ -21,8 +20,7 @@ import {
   app_vivaldi,
   floating_terminal,
 } from "./rules-apps";
-import { regex } from "./patterns";
-import { focusWindow } from "./utils";
+import { ifAppleKeyboard, ifNotAppleKeyboard } from "./patterns";
 
 // Reference config: https://github.com/evan-liu/karabiner-config/blob/main/karabiner-config.ts
 
@@ -47,31 +45,14 @@ writeToProfile(
 
     floating_terminal(),
 
-    layer("/", "Switch App").manipulators([
-      // browsers
-      map("c").toApp("Google Chrome"),
-      map("v").toApp("Vivaldi"),
-      map("b").toApp("Brave Browser"),
+    layer("/", "Switch App")
+      .condition(ifNotAppleKeyboard)
+      .manipulators(appLaunchers),
 
-      // coms
-      map("s").toApp("Slack"),
-      map("o").toApp("Microsoft Outlook"),
-      map("y").to$(focusWindow("Microsoft Teams")),
-
-      // tools
-      map("f").toApp("Finder"),
-      map("w").toApp("WezTerm"),
-      map("p").toApp("Postman"),
-      map("t").toApp("TickTick"),
-
-      // ai
-      //map("g").toApp("ChatGPT"),
-      map("g").toApp("Msty"),
-      //map("g").toApp("Chatbox"),
-
-      // ide's
-      map("a").toApp("Visual Studio Code"),
-    ]),
+    // macbook, no home row mods
+    layer(";", "Switch App")
+      .condition(ifAppleKeyboard)
+      .manipulators(appLaunchers),
 
     rule("App switch").manipulators([
       withModifier("Hyper")([

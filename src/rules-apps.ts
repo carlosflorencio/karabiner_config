@@ -117,7 +117,9 @@ export function app_vivaldi() {
 export function floating_terminal() {
   return rule("Floating terminal").manipulators([
     withCondition(ifNotFloatingTerminal)([
-      withModifier("Hyper")([map("return_or_enter").toApp(floatingTerminal.app)]),
+      withModifier("Hyper")([
+        map("return_or_enter").toApp(floatingTerminal.app),
+      ]),
     ]),
     withCondition(ifFloatingTerminal)([
       withModifier("Hyper")([map("return_or_enter").to("tab", ["command"])]),
