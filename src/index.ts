@@ -4,12 +4,12 @@ import {
   mapSimultaneous,
   rule,
   toMouseCursorPosition,
-  withCondition,
   withModifier,
   writeToProfile,
 } from "karabiner.ts";
 import { laptop_keyboard } from "./laptop-keyboard";
 import { appLaunchers } from "./launch-apps";
+import { ifAppleKeyboard, ifNotAppleKeyboard } from "./patterns";
 import {
   app_chatgpt,
   app_chrome,
@@ -20,7 +20,6 @@ import {
   app_vivaldi,
   floating_terminal,
 } from "./rules-apps";
-import { ifAppleKeyboard, ifNotAppleKeyboard } from "./patterns";
 
 // Reference config: https://github.com/evan-liu/karabiner-config/blob/main/karabiner-config.ts
 
