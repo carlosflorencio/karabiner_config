@@ -9,7 +9,11 @@ import {
 } from "karabiner.ts";
 import { laptop_keyboard } from "./laptop-keyboard";
 import { appLaunchers } from "./launch-apps";
-import { ifAppleKeyboard, ifNotAppleKeyboard } from "./patterns";
+import {
+  ifAppleKeyboard,
+  ifNotAppleKeyboard,
+  ifTotemKeyboard,
+} from "./patterns";
 import {
   app_chatgpt,
   app_chrome,
@@ -45,7 +49,7 @@ writeToProfile(
     floating_terminal(),
 
     layer("/", "Switch App")
-      .condition(ifNotAppleKeyboard)
+      .condition(ifTotemKeyboard)
       .manipulators(appLaunchers),
 
     // macbook, no home row mods
