@@ -28,6 +28,7 @@ regex.terminals = [regex.iterm2, regex.alacritty, regex.wezterm];
 export const ifAppleKeyboard = ifDevice({ is_built_in_keyboard: true });
 export const ifNotAppleKeyboard = ifAppleKeyboard.unless();
 export const ifTotemKeyboard = ifDevice({ vendor_id: 7504 });
+export const ifGlove80Keyboard = ifDevice({ vendor_id: 5824 });
 export const ifTerminal = ifApp(regex.terminals);
 export const ifFinder = ifApp(regex.finder);
 export const ifBrowser = ifApp(regex.browsers);

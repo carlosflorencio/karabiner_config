@@ -11,6 +11,7 @@ import { laptop_keyboard } from "./laptop-keyboard";
 import { appLaunchers } from "./launch-apps";
 import {
   ifAppleKeyboard,
+  ifGlove80Keyboard,
   ifNotAppleKeyboard,
   ifTotemKeyboard,
 } from "./patterns";
@@ -55,6 +56,11 @@ writeToProfile(
     // macbook, no home row mods
     layer(";", "Switch App")
       .condition(ifAppleKeyboard)
+      .manipulators(appLaunchers),
+
+    // glove, no home row mods
+    layer(";", "Switch App")
+      .condition(ifGlove80Keyboard)
       .manipulators(appLaunchers),
 
     rule("App switch").manipulators([
