@@ -125,8 +125,9 @@ export function floating_terminal() {
     ]),
     withCondition(ifFloatingTerminal)([
       // better to avoid long app switcher until key is released
-      withModifier("Hyper")([map("return_or_enter").to("h", ["command"])]),
-      //withModifier("Hyper")([map("return_or_enter").to("tab", ["command"])]),
+      // withModifier("Hyper")([map("return_or_enter").to("h", ["command"])]),
+      // cmd+h was not respecting the previous application
+      withModifier("Hyper")([map("return_or_enter").to("tab", ["command"])]),
     ]),
   ]);
 }
