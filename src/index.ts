@@ -11,9 +11,7 @@ import { laptop_keyboard } from "./laptop-keyboard";
 import { appLaunchers } from "./launch-apps";
 import {
   ifAppleKeyboard,
-  ifGlove80Keyboard,
-  ifNotAppleKeyboard,
-  ifTotemKeyboard,
+  ifGlove80Keyboard, ifTotemKeyboard
 } from "./patterns";
 import {
   app_chatgpt,
