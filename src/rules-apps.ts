@@ -7,13 +7,11 @@ import {
   withModifier,
 } from "karabiner.ts";
 import {
-  floatingTerminal,
-  ifAppleKeyboard,
-  ifBrowser,
+  floatingTerminal, ifBrowser,
   ifFinder,
   ifFloatingTerminal,
   ifNotFloatingTerminal,
-  regex,
+  regex
 } from "./patterns";
 import {
   betterDeleteWord,

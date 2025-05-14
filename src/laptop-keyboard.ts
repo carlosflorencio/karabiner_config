@@ -2,9 +2,8 @@ import {
   FromKeyParam,
   map,
   rule,
-  ToKeyParam,
-  withMapper,
-  withModifier,
+  ToKeyParam, withMapper,
+  withModifier
 } from "karabiner.ts";
 import { ifAppleKeyboard } from "./patterns";
 
