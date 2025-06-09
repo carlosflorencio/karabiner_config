@@ -2,8 +2,9 @@ import {
   FromKeyParam,
   map,
   rule,
-  ToKeyParam, withMapper,
-  withModifier
+  ToKeyParam,
+  withMapper,
+  withModifier,
 } from "karabiner.ts";
 import { ifAppleKeyboard } from "./patterns";
 
@@ -28,8 +29,9 @@ export function laptop_keyboard() {
 
     // Hyper + s/f to switch spaces
     withModifier("Hyper")([
-      map("f").to("right_arrow", ["left_control"]),
-      map("s").to("left_arrow", ["left_control"]),
+      map("f").to("spacebar", ["left_shift", "left_command"]),
+      map("spacebar").to("j", ["left_shift", "left_command"]),
+      // map("s").to("left_arrow", ["left_control"]),
     ]),
 
     // Hyper + r/w to switch tabs
