@@ -102,7 +102,7 @@ writeToProfile(
     //     })
     // ])
 
-    rule("Move Mouse").manipulators([
+    rule("Move Mouse To Monitors").manipulators([
       withModifier("Hyper")({
         ",": toMouseCursorPosition({ x: "50%", y: "50%", screen: 0 }),
         m: toMouseCursorPosition({ x: "50%", y: "50%", screen: 2 }),
