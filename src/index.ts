@@ -4,6 +4,7 @@ import {
   mapSimultaneous,
   rule,
   toMouseCursorPosition,
+  withCondition,
   withModifier,
   writeToProfile,
 } from "karabiner.ts";
@@ -65,6 +66,12 @@ writeToProfile(
     rule("App switch").manipulators([
       withModifier("Hyper")([
         map("spacebar").to("tab", ["command"]).toIfAlone("tab", ["command"]),
+      ]),
+    ]),
+
+    rule("Glove80 only").manipulators([
+      withCondition(ifGlove80Keyboard)([
+        withModifier("control")([map("escape").to("spacebar", ["control"])]),
       ]),
     ]),
 
