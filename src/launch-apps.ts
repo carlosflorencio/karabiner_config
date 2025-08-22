@@ -17,6 +17,7 @@ export const appLaunchers = [
   map("w").toApp("WezTerm"),
   map("p").toApp("Postman"),
   map("t").toApp("TickTick"),
+  map("m").toApp("Spotify"),
 
   // ai
   //map("g").toApp("ChatGPT"),
