@@ -21,7 +21,8 @@ export const appLaunchers = [
 
   // ai
   //map("g").toApp("ChatGPT"),
-  map("g").toApp("Msty"),
+  // map("g").toApp("Msty"),
+  map("g").toApp("Cherry Studio"),
   //map("g").toApp("Chatbox"),
 
   // ide's

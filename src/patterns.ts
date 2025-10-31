@@ -16,6 +16,7 @@ export const regex = {
   slack: "^com\\.tinyspeck\\.slackmacgap$",
   chatgpt: "^com\\.openai\\.chat$",
   msty: "^app\\.msty\\.app$",
+  cherryai: "^com\\.kangfenmao\\.CherryStudio$",
   chatbox: "^xyz\\.chatboxapp\\.app$",
   browsers: [""],
   terminals: [""],
