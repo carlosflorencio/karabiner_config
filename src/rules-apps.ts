@@ -81,8 +81,8 @@ export function app_slack() {
     ...historyNavi(),
 
     ...tapModifiers({
-      "<⌥": toKey("d", "⌘⇧"), // showHideSideBar
-      "<⌘": toKey(".", "⌘"), // hideRightBar
+      // "<⌥": toKey("d", "⌘⇧"), // showHideSideBar
+      // "<⌘": toKey(".", "⌘"), // hideRightBar
     }),
   ]);
 }
