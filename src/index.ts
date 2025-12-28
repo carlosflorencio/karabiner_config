@@ -17,6 +17,7 @@ import {
 } from "./patterns";
 import {
   app_chatgpt,
+  app_cherryai,
   app_chrome,
   app_finder,
   app_msty,
@@ -44,6 +45,7 @@ writeToProfile(
     app_slack(),
     app_chatgpt(),
     app_msty(),
+    app_cherryai(),
 
     laptop_keyboard(),
 

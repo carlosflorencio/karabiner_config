@@ -61,6 +61,12 @@ export function app_msty() {
   ]);
 }
 
+export function app_cherryai() {
+  return rule("Cherry AI", ifApp(regex.cherryai)).manipulators([
+    ...betterDeleteWord(),
+  ]);
+}
+
 export function app_chrome() {
   return rule("Chrome", ifApp(regex.chrome)).manipulators([
     ...betterDeleteWord(),
