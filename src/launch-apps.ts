@@ -19,6 +19,11 @@ export const appLaunchers = [
   map("t").toApp("TickTick"),
   map("m").toApp("Music"),
 
+  map("d").toApp("Discord"),
+
+  map("1").toApp("Conductor"),
+  map("2").toApp("Crystal"),
+
   // ai
   //map("g").toApp("ChatGPT"),
   // map("g").toApp("Msty"),

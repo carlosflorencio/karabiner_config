@@ -67,6 +67,18 @@ export function app_cherryai() {
   ]);
 }
 
+export function app_discord() {
+  return rule("Discord", ifApp(regex.discord)).manipulators([
+    ...betterDeleteWord(),
+  ]);
+}
+
+export function app_conductor() {
+  return rule("Conductor", ifApp(regex.conductor)).manipulators([
+    ...betterDeleteWord(),
+  ]);
+}
+
 export function app_chrome() {
   return rule("Chrome", ifApp(regex.chrome)).manipulators([
     ...betterDeleteWord(),

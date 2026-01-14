@@ -18,6 +18,8 @@ export const regex = {
   msty: "^app\\.msty\\.app$",
   cherryai: "^com\\.kangfenmao\\.CherryStudio$",
   chatbox: "^xyz\\.chatboxapp\\.app$",
+  discord: "^com\\.hnc\\.Discord$",
+  conductor: "^com\\.conductor\\.app",
   browsers: [""],
   terminals: [""],
 };

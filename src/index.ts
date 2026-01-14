@@ -19,6 +19,8 @@ import {
   app_chatgpt,
   app_cherryai,
   app_chrome,
+  app_conductor,
+  app_discord,
   app_finder,
   app_msty,
   app_outlook,
@@ -46,6 +48,8 @@ writeToProfile(
     app_chatgpt(),
     app_msty(),
     app_cherryai(),
+    app_discord(),
+    app_conductor(),
 
     laptop_keyboard(),
 
