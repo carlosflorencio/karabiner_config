@@ -129,7 +129,7 @@ export function app_vivaldi() {
     }),
     //]),
 
-    map("i", ["command"]).to("i", ["command", "option"]), // developerTools
+    // map("i", ["command"]).to("i", ["command", "option"]), // developerTools
   ]);
 }
 
